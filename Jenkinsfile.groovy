@@ -14,12 +14,13 @@ node {
    stage("Send Notification to slack"){
      slackSend channel: 'nagios_alerts', message: "${TOOL_TO_PROVISION} build"
     }
-   stage("Pull Repo"){
-     mail bcc: '',
-     body: "Hello,
-     Your ${TOOL_TO_PROVISION} has been build",
-      cc: '', from: '', replyTo: '',
-      subject: "${TOOL_TO_PROVISION}",
-      to: 'a.clipco@gmail.com'
+   stage("Send Email"){
+        mail bcc: '', 
+        body: "Hello, Your AMI is ready in ${AMI_REGION} Thanks",
+        cc: '',
+        from: '',
+        replyTo: '',
+        subject: "${TOOL_TO_PROVISION} has been built",
+        to: 'anastasiaclipco@gmail.com'
     }
 }

@@ -33,10 +33,10 @@ node {
      sh "packer version"
      sh "packer build -var region=${AMI_REGION} tools/${TOOL_TO_PROVISION}".json
     }
-   stage("Send Notification to slack"){
+   //stage("Send Notification to slack"){
      slackSend channel: 'nagios_alerts', message: "${TOOL_TO_PROVISION} build"
     }
-   stage("Send Email"){
+   //stage("Send Email"){
         mail bcc: '',
         body: "Hello, Your AMI is ready in ${AMI_REGION} Thanks",
         cc: '',

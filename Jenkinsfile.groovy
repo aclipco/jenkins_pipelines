@@ -15,11 +15,11 @@ node {
      slackSend channel: 'nagios_alerts', message: "${TOOL_TO_PROVISION} build"
     }
    stage("Pull Repo"){
-     mail bcc: '', 
+     mail bcc: '',
      body: "Hello,
      Your ${TOOL_TO_PROVISION} has been build",
-      cc: '', from: '', replyTo: '', 
-      subject: "${TOOL_TO_PROVISION}", 
+      cc: '', from: '', replyTo: '',
+      subject: "${TOOL_TO_PROVISION}",
       to: 'a.clipco@gmail.com'
     }
 }

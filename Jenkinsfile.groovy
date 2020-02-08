@@ -1,8 +1,9 @@
 node {
    properties(
-     [properties([parameters([
-       choice(choices: ['golden_ami', 'tower', 'elk ', 'nagiosxi', 'gitlab', 'volt', 'nexus'], description: 'What tool  would you  like to build', name: 'TOOL_TO _PROVISION'),
-     choice(choices: ['us-east-1', 'us-east-2', 'us-west-1', 'us-west-2'], description: 'Choose a region', name: 'AMI_REGION')])])
+    properties([parameters([
+        choice(choices: ['golden_ami', 'tower', 'elk', 'nagiosxi', 'gitlab', 'nexus', 'vault'], description: 'What tool would you like to build?', name: 'TOOL_TO_PROVISION'),
+        text(defaultValue: 'dummy@gmail.com', description: 'Please provide email(s) for notifications. Use , for multiple emails', name: 'EMAIL_TO_SEND'),
+        choice(choices: ['us-east-1', 'us-east-2', 'us-west-1', 'us-west-2'], description: 'Please choose a region', name: 'AMI_REGION')])])
 
    stage("Pull Repo"){
      git 'https://github.com/farrukh90/packer'
@@ -21,6 +22,6 @@ node {
         from: '',
         replyTo: '',
         subject: "${TOOL_TO_PROVISION} has been built",
-        to: 'anastasiaclipco@gmail.com'
+        to: "${EMAIL_TO_SEND}"
     }
 }

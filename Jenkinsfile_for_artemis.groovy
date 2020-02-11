@@ -1,28 +1,25 @@
 node {
-	properties(
-		[parameters(
-		[choice(choices:
-		[
-		'version/0.1',
-		'version/0.2',
-		'version/0.3',
-		'version/0.4',
-		'version/0.5',
-		'version/0.6',
-		'version/0.7',
-		'version/0.8',
-		'version/0.9',
-		'version/0.10'],
-	description: 'Which version of the app should I deploy? ',
-	name: 'Version'),
-	choice(choices:
-	[
-		'dev1.anastasiaclipcodevops.com',
-		'qa1.anastasiaclipcodevops.com',
-		'stage1.anastasiaclipcodevops.com',
-		'prod1.anastasiaclipcodevops.com'],
-	description: 'Please provide an environment to build the application',
-	name: 'ENVIR')])])
+	properties([[$class: 'JiraProjectProperty'],
+	 parameters([
+		 string(defaultValue: 'dummy@gmail.com',
+		  description: 'Please enter an email to receive Artemis deploy status',
+			 name: 'EMAIL_TO_SEND', trim: false), 
+			 choice(choices: [
+				 'version/0.1', 
+				 'version/0.2', 
+				 'version/0.3', 
+				 'version/0.4', 
+				 'version/0.5', 
+				 'version/0.6', 
+				 'version/0.7', 
+				 'version/0.8', 
+				 'version/0.9', 
+				 'version/0.10'], 
+				 description: 'Which version of the app should I deploy?', 
+				 name: 'Version'), 
+				 choice(choices: [
+					 'dev1.anastasiaclipcodevops.com', 'qa1.anastasiaclipcodevops.com', 'stage1.anastasiaclipcodevops.com', 'prod1.anastasiaclipcodevops.com'], 
+					 description: 'Please provide an environment to build the application', name: 'ENVIR')])])
 	stage("Stage1"){
 		timestamps {
 			ws {
@@ -66,5 +63,11 @@ node {
 				//slackSend color: '#BADA55', message: 'Hello, World!'
 			}
 		}
+	}
+
+	stage ("Send Email") {
+		mail bcc: '',
+		 body: "Hello, Artemis app has beed successfully deployed to ${Envir}", cc: '', from: '', replyTo: '', 
+		 subject: "Artemis ${Version} has been deployed", to: "${EMAIL_TO_SEND}"
 	}
 }

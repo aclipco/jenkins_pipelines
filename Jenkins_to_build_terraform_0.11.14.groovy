@@ -3,7 +3,7 @@ stage("pull repo"){
       git 'https://github.com/aclipco/docker_images.git'
     }
 stage("Build Image"){
-      sh "docker build -t terraformimages1  ."
+      sh "docker build -t terraformimages1  Terraform_0.11.14/ ."
     }
 stage("Image Tag"){
       sh '''docker tag terraformimages1 431846644568.dkr.ecr.us-east-1.amazonaws.com/terraformimages1'''
